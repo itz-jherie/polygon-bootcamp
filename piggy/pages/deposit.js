@@ -20,7 +20,7 @@ import { parseEther, formatEther, parseUnits } from 'ethers/lib/utils';
 const Deposit = () => {
     const [unlockTime, setUnlockTime] = useState(0);
     const [humanizeTime, setHumanizeTime] = useState();
-    const [customTime, setCustomTime] = useState();
+    const [customTime, setCustomTime] = useState('');
     const [depositAmount, setDepositAmount] = useState('');
     const { address } = useAccount()
     
@@ -151,31 +151,12 @@ const Deposit = () => {
             }
         });
 
-        // const { config: depositConfig } = usePrepareContractWrite({
-        //     address: PIGGY_ADDRESS,
-        //     abi: PIGGY_ABI,
-        //     functionName: "depositEth",
-        //     overrides: {
-        //         from: address,
-        //         value: ethers.utils.parseEther("4")
-        //     },
-            
-    
-        // })
-        // const { write: depositConfigWrite } = useContractWrite({
-        //     ...depositConfig,
-        //     onError(error) {
-        //         alert(error.message.slice(0, 25))
-        //     },
-        //     onSuccess() {
-        //             alert('Deposit Successful')
-        //          }
-        // })
+
     return (
-        <div className="bg-black flex text-white white h-screen align-center flex-col">
+        <div className="bg-black flex text-white white h-screen align-center flex-col md:mx-0 xl:mx-50 lg:mx-40">
             <p>.</p>
             <p className="mt-10 flex justify-center">SAVE MATIC:</p>
-            <p className="border rounded-md w-1/2 self-center p-5">
+            <p className="border rounded-md w-1/2 self-center p-5 italic">
                 The individual most 
                 accountable for your 
                 future financial welfare
@@ -193,7 +174,7 @@ const Deposit = () => {
                                     type="number"
                                     placeholder="custom time"
                                     onChange={e => {
-                                        setCustomTime(e.target.value) 
+                                            setCustomTime(e.target.value) 
                                         }}
                                     value={customTime}
                                 />
@@ -255,8 +236,8 @@ const Deposit = () => {
                 >Submit</button>
             </form>
             <div className='mt-20'>.</div>
-            <div className='bottom-4 flex place-self-center w-3/4 px-1 py-3 bg-white opacity- backdrop-blur fixed justify-evenly rounded-full'>
-                <div className='w-10 bg-red bg-opacity-50 backdrop-blur'><Link href='/'><Image src={home} alt="home"/></Link></div>
+            <div className='bottom-4 flex place-self-center w-3/4 px-1 py-3 border border-gray-400 fixed justify-evenly rounded-full bg-opacity-50 backdrop-blur bg-purple-200'>
+                <div className='w-10 bg-red'><Link href='/'><Image src={home} alt="home"/></Link></div>
                 <div className='w-10 bg-red-30 text-black font-bold '><Image src={piggybtn} alt="deposit"/><span className='font-black bg-black p-1 text-xs flex'></span></div>
                 <div className='w-10'><Link href='/withdraw'><Image src={withdraw} alt="withdraw"/></Link></div>
                 
