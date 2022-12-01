@@ -47,6 +47,7 @@ export default function Home() {
       setWithdrawn(formatEther(data))
     }
   })
+  
  return (
     <div className="bg-black text-white h-screen flex flex-col md:mx-0 xl:mx-50 lg:mx-40">
       <Image src={piggy}  alt='bg'className='flex self-center'/>
