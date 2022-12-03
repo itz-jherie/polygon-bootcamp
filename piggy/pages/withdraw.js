@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import { ConnectButton } from '@rainbow-me/rainbowkit'
+import { ConnectButton, cssObjectFromTheme } from '@rainbow-me/rainbowkit'
 import piggy from '../assets/piggypic.webp'
 import home from '../assets/home.svg'
 import withdraw from '../assets/withdraw.svg'
@@ -24,7 +24,14 @@ const Withdraw = () => {
     const [unlockTime, setUnlockTime] = useState()
     const [userDepositValue, setUserDepositValue] = useState('')
     const [withdrawID, setWithdrawID] = useState('')
+    const [accountFrom, setAccountFrom] = useState('')
  
+
+    const truncate = (address) => {
+        let slice1= address.slice(0,4)
+        let slice2= address.slice(-4)
+        return(`${slice1}...${slice2}`)
+    }
 
     const getTotalDeposits = useContractRead({
         address: PIGGY_ADDRESS,
@@ -47,16 +54,20 @@ const Withdraw = () => {
             setDepositId(parseInt(queryDeposits._depositId._hex))
             setDepositTime(parseInt(queryDeposits._depositTime._hex))
             setUnlockTime(parseInt(queryDeposits._unlockTime._hex))
+            setAccountFrom(truncate(queryDeposits._from))
+            console.log(accountFrom)
             setQueryDetails(true) 
         }
+        
     }
 
         const getReadableDate = (unixTime) => {
             let timestamp = unixTime*1000
             let date = new Date(timestamp);
-            return date;
+            return date.toLocaleString();
         }
 
+       
         const { config: withdrawConfig } = usePrepareContractWrite({
             address: PIGGY_ADDRESS,
             abi: PIGGY_ABI,
@@ -72,38 +83,39 @@ const Withdraw = () => {
                 alert('Successful')
             }
         });
-//2.0466
 
     return ( 
         <div className='bg-black h-screen align-center flex flex-col md:mx-0 xl:mx-50 lg:mx-40'>
             <div className='mt-7'>.</div>
-            <p className='bg-green-500 self-center p-3 mt-3'>Total Deposits Index: {deposits} </p>
+            <p className='bg-green-500 self-center p-3 mt-5 text-white font-bold rounded-sm'>Total Deposits Index: {deposits} </p>
             <div className='flex bg-gray-300  place-self-center flex-col place-content-center p-7 rounded-md m-3'>
                 <p className='self-center font-bold'>Query deposit</p>
-                <form>
+                <form className='flex self-center '>
                     <input
-                        className='p-2'
+                        className='p-2 rounded-l-md'
                         type='number'
                         placeholder='Enter deposit ID'
+                        min='0'
                         onChange={e => {
                                 setUserDepositValue(e.target.value);
                             }}
                         value={userDepositValue}
                     />
-                    <button className='bg-purplee p-2'
+                    <button className='bg-purplee p-2 self-center rounded-r-md'
                         onClick={(e) => {
                             e.preventDefault()
                             getQuery(userDepositValue)
                             setUserDepositValue('')
                         }}
-                    >Query Deposit</button>
+                    >Query</button>
                 </form>
                 {queryDetails && 
-                    <div>
+                    <div className='text-black flex flex-col font-bold mt-3'>
                         <p>Deposit ID: {depositId}  </p>
                         <p>Amount: {amount} MATIC</p>
                         <p>Deposit Time: {getReadableDate(depositTime).toString()} </p>
                         <p>Unlock Time: {getReadableDate(unlockTime).toString()}</p>
+                        <p>From : {accountFrom}</p>
                     </div>
                 }
             </div>
@@ -114,6 +126,7 @@ const Withdraw = () => {
                         className='bg-slate-500 placeholder-white text-bold w-2/3 p-3 rounded-md m-2'
                         type="number"
                         placeholder='Deposit ID...'
+                        min='0'
                         setWithdrawID
                         onChange={e => {
                             setWithdrawID(e.target.value);

@@ -54,7 +54,7 @@ contract PiggyBank {
     }
 
     // Deposit eth to the smart contract
-    function depositEth() public payable onlyOwner{
+    function depositEth() public payable {
         require(msg.value > 0, "You did'nt provide any funds");
         
         ethersIn = ethersIn.add(msg.value);
@@ -69,7 +69,7 @@ contract PiggyBank {
         deposits.push(newDeposit);
     }
 
-    function withdrawEthFromDeposit(uint256 _depositId) public {
+    function withdrawEthFromDeposit(uint256 _depositId) public onlyOwner {
         require(block.timestamp >= deposits[_depositId]._unlockTime, "Unlock time not reached!");
         ethersOut = ethersOut.add(deposits[_depositId]._amount);
         payable(msg.sender).transfer(deposits[_depositId]._amount);

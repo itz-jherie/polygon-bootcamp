@@ -155,24 +155,25 @@ const Deposit = () => {
     return (
         <div className="bg-black flex text-white white h-screen align-center flex-col md:mx-0 xl:mx-50 lg:mx-40">
             <p>.</p>
-            <p className="mt-10 flex justify-center">SAVE MATIC:</p>
+            <p className="mt-12 flex justify-center p-2 font-bold">SAVE MATIC</p>
             <p className="border rounded-md w-1/2 self-center p-5 italic">
                 The individual most 
                 accountable for your 
                 future financial welfare
                 is the one you see in 
                 the mirror today. <br/>
-                -kemberly wardlaw
+                <span className=' float-right font-bold'>- kemberly wardlaw</span>
                 </p>
             <div className="bg-purplee mt-7 w-full">
-                <p className="text-center">Set unlock time:</p>
+                <p className="text-center p-2">Set unlock time</p>
                 <div className="flex flex-wrap justify-center font-black">
                     <div className='w-full flex justify-center'>
-                        <div className="bg-white  text-black p-7  m-2 flex flex-col items-center">Enter Custom Time:
-                            <form className='self-center bg-gray-300'>
+                        <div className="bg-white  text-black p-7  m-2 flex flex-col items-center rounded-md">Enter Custom Time
+                            <form className='self-center bg-gray-300 rounded-md text-black font-medium'>
                                 <input className='flex justify-center bg-gray-300 p-2 rounded-md'  
                                     type="number"
                                     placeholder="custom time"
+                                    min='0'
                                     onChange={e => {
                                             setCustomTime(e.target.value) 
                                         }}
@@ -180,7 +181,7 @@ const Deposit = () => {
                                 />
                             </form>
                             <button 
-                                className='bg-purplee p-2 rounded-md mt-2'
+                                className='bg-purplee p-3 rounded-md mt-2 text-white'
                                 onClick={(e) => {
                                     e.preventDefault()
                                     customTimeWrite()
@@ -218,16 +219,17 @@ const Deposit = () => {
             <div className="text-center">Current lock time:
                 <p className="text-lg font-bold">{humanizeTime}</p>
             </div>
-            <form className=" flex justify-center flex-col font-black">
-                <input className="flex w-1/2 self-center p-5 rounded-md mt-3 bg-slate-500 font-bold"
+            <form className=" flex justify-center flex-col text-black font-medium">
+                <input className="flex w-1/2 self-center p-5 rounded-md mt-3 bg-slate-500"
                     type='number'
                     placeholder="Enter amount to deposit"
+                    min='0'
                     onChange={(e) => {
                         setDepositAmount(e.target.value) 
                         }}
                     value={depositAmount}
                 />
-                <button className="p-5 bg-purplee w-1/4 self-center mt-7 rounded-md"
+                <button className="p-5 bg-purplee w-1/4 self-center mt-7 rounded-md text-white"
                     onClick={(e) => {
                         e.preventDefault()
                         depositWrite()
